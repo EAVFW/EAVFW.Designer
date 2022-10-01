@@ -1,0 +1,39 @@
+{
+  "name": "eavfw",
+  "author": "Poul Kjeldager <poul@kjeldager.com>",
+  "devDependencies": {
+    "@types/node": "18.7.20",
+    "@types/react": "17.0.50",
+    "concurrently": "7.4.0",
+    "npm-run-all": "4.1.5",
+    "multi-semantic-release": "3.0.1",
+    "semantic-release": "19.0.5",
+    "semantic-release-monorepo": "7.0.5"
+  },
+  "scripts": {
+    "link": "concurrently  \"npm:link-*\"",
+    "link-core": "npm --workspace packages/core link",
+    "link-designer": "npm --workspace packages/designer link",
+    "link-nodes": "npm --workspace packages/nodes link",
+
+
+    "publish": "npm-run-all --continue-on-error publish-*",
+    "publish-core": "npm --workspace packages/apps publish --access public",
+
+
+    "release": "npm-run-all --continue-on-error release-*",
+    "release-core": "npm run release --workspace packages/apps"
+
+  },
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EAVFW/EAVFW.Designer.git"
+  },
+  "license": "MIT"
+}
