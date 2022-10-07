@@ -5,31 +5,26 @@
   "dependencies": {
     "@craftjs/core": "0.2.0-beta.8",
     "file-saver": "2.0.5",
+    "@types/file-saver": "2.0.5",
     "jszip": "3.10.1",
     "react-color": "2.19.3",
+    "@types/react-color": "3.0.6",
     "@eavfw/designer-core": "*",
-    "@eavfw/designer-nodes": "*"
+    "@eavfw/designer-nodes": "*",
+
   },
   "peerDependencies": {
+    "styled-components": "5.3.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "styled-components": "5.3.5",
-    "@fluentui/react": "8.96.1",
-    "@eavfw/hooks": "1.0.3",
-    "@eavfw/manifest": "1.3.0",
-    "@eavfw/forms": "1.0.3",
-    "@eavfw/apps": "1.2.0",
-    "@eavfw/expressions": "1.0.2",
-    "@eavfw/utils": "1.0.2",
+    "@eavfw/apps": "1.3.0-dev.1",
     "pako": "2.0.4",
-    "@fluentui/react-hooks": "8.6.11"
+    "@types/pako": "2.0.0",
+    "@fluentui/react": "8.96.1",
+    "@fluentui/react-hooks": "8.6.11",
+    "@types/clone-deep": "4.0.1"
   },
   "devDependencies": {
-
-    "@types/pako": "2.0.0",
-    "@types/file-saver": "2.0.5",
-    "@types/react-color": "3.0.6",
-    "@types/clone-deep": "4.0.1"
   },
   "license": "MIT",
   "files": [
