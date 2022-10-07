@@ -22,7 +22,12 @@
 
 
     "release": "npm-run-all --continue-on-error release-*",
-    "release-core": "npm run release --workspace packages/apps"
+    "release-core": "npm run release --workspace packages/core",
+    "release-designer": "npm run release --workspace packages/designer",
+    "release-nodes": "npm run release --workspace packages/nodes",
+
+
+    "eavfw-link": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils"
 
   },
   "private": true,

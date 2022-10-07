@@ -17,13 +17,17 @@
     "@eavfw/manifest": "1.3.0",
     "@eavfw/forms": "1.0.3",
     "@eavfw/apps": "1.2.0",
+    "@eavfw/expressions": "1.0.2",
+    "@eavfw/utils": "1.0.2",
     "pako": "2.0.4",
     "@fluentui/react-hooks": "8.6.11"
   },
   "devDependencies": {
+
     "@types/pako": "2.0.0",
     "@types/file-saver": "2.0.5",
-    "@types/react-color": "3.0.6"
+    "@types/react-color": "3.0.6",
+    "@types/clone-deep": "4.0.1"
   },
   "license": "MIT",
   "files": [

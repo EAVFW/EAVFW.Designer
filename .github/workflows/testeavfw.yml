@@ -1,0 +1,61 @@
+name: Build and Test EAVFW
+
+on:
+  workflow_call:
+    inputs:
+      dotnetversion:
+        required: false
+        default: '6.0.302'
+        type: string
+      nodeversion:
+        required: false
+        default: '16'
+        type: string
+      
+jobs:
+  eavfw_job:
+    name: Build and Test EAVFW
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ inputs.dotnetversion }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ inputs.nodeversion }}
+          
+      - name: install EAVFW template
+        run: (dotnet new --debug:rebuildcache) -and (dotnet new --install EAVFW.Templates)
+
+      - name: link
+        run: npm install --force --ignore-scripts
+
+      - name: link
+        run: npm run link
+
+      - name: create directory for test project
+        run: mkdir ./../GithubEAVTestDirectory
+
+      - name: create test project from template with no extensions
+        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --skipGitCommit --allow-scripts yes)
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: create test web portal from template
+        run: npm run eavfw-nextjs
+        working-directory: "./../GithubEAVTestDirectory"
+ 
+      - name: Install NPM
+        run: npm install --force
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: LINK EAVFW
+        run: npm run eavfw-link --force
+        working-directory: "./../GithubEAVTestDirectory"
+        
+      - name: build and export web portal
+        run: npm run build
+        working-directory: "./../GithubEAVTestDirectory"

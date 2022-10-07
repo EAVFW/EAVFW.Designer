@@ -1,0 +1,11 @@
+#name: pullrequest
+
+#on:
+#  pull_request:
+#    branches:
+#      - dev
+#      - main
+
+#jobs:
+#  eavfw_job:
+#    uses: ./.github/workflows/testeavfw.yml
