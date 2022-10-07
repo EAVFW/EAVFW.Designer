@@ -10,8 +10,7 @@
     "react-color": "2.19.3",
     "@types/react-color": "3.0.6",
     "@eavfw/designer-core": "*",
-    "@eavfw/designer-nodes": "*",
-
+    "@eavfw/designer-nodes": "*"
   },
   "peerDependencies": {
     "styled-components": "5.3.6",
