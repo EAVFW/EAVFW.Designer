@@ -6,10 +6,10 @@ import styled from 'styled-components';
 
 
 
-import ArrowUp from '../../public/icons/arrow-up.svg';
-import Delete from '../../public/icons/delete.svg';
-import Move from '../../public/icons/move.svg';
-import Visible from '../../public/icons/not-visible.svg';
+import ArrowUp from '../icons/arrow-up.svg';
+import Delete from '../icons/delete.svg';
+import Move from '../icons/move.svg';
+import Visible from '../icons/not-visible.svg';
 
 import { IconButton, IIconProps, makeStyles } from '@fluentui/react';
 

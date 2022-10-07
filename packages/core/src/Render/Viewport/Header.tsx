@@ -3,10 +3,10 @@ import { useEditor } from '@craftjs/core';
 import React from 'react';
 import styled from 'styled-components';
 
-import Checkmark from '../../../public/icons/check.svg';
-import Customize from '../../../public/icons/customize.svg';
-import RedoSvg from '../../../public/icons/toolbox/redo.svg';
-import UndoSvg from '../../../public/icons/toolbox/undo.svg';
+import Checkmark from '../../icons/check.svg';
+import Customize from '../../icons/customize.svg';
+import RedoSvg from '../../icons/toolbox/redo.svg';
+import UndoSvg from '../../icons/toolbox/undo.svg';
 
 
 
