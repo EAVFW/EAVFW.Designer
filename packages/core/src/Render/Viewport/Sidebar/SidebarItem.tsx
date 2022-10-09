@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-import Arrow from '../../../icons/arrow.svg';
+import Arrow from '../../../Icons/arrow.svg';
 
 const SidebarItemDiv = styled.div<{ visible?: boolean; height?: string }>`
   height: ${(props) =>
