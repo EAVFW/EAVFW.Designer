@@ -50,7 +50,10 @@ export const ToolbarSection = ({ title, props, summary, children }: any) => {
                 return res;
             }, {}),
     }));
-    return (<div>according impl missing</div>
+    return (<div>
+        {title}
+        {children}
+    </div>
         //<Accordion classes={panelClasses}>
         //    <AccordionSummary classes={summaryClasses}>
         //        <div className="px-6 w-full">
