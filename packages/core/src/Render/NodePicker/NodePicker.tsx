@@ -48,8 +48,9 @@ export const NodePicker: React.FC<NodePickerProps> = () => {
         freshNode.data.custom.nodeIndex = layoutNodeIndex;
         // Create a new valid Node object from the fresh Node
         const node = parseFreshNode(freshNode as any).toNode();
-
-        addNode(node, parentNodeId, nodeIndex);
+        if (parentNodeId) {
+            addNode(node, parentNodeId, nodeIndex);
+        }
         deleteNode(id);
         selectNode(node.id);
     }, [id]);
@@ -63,7 +64,7 @@ export const NodePicker: React.FC<NodePickerProps> = () => {
          {
             Object.entries(resolver)
                 .filter(IsUserComponentEntry)
-                .map(([key, node]) => <Fragment>
+                .map(([key, node]) => <Fragment key={key}>
                     <NodeButton replaceNode={replaceNode} node={{
                         data: {
                             type: node

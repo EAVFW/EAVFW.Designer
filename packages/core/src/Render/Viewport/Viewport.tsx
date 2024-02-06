@@ -1,9 +1,22 @@
 import { useEditor } from '@craftjs/core';
-import { makeStyles, UseStylesOptions } from '@fluentui/react';
+import { makeStyles, tokens, shorthands } from '@fluentui/react-components';
 
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { classNames } from '../../Utils/classNames';
+import { Dismiss24Regular } from "@fluentui/react-icons";
+import {
+    DrawerBody,
+    DrawerHeader,
+    DrawerHeaderTitle,
+    Drawer,
+    DrawerProps,
+    Button,
+    Label,
+    Radio, Accordion,
+    RadioGroup,
+    useId,
+} from "@fluentui/react-components";
 
 
 import { Header } from './Header';
@@ -17,10 +30,11 @@ export type ViewPortProps = {
 type styleProps = {
     enabled: boolean;
 }
-const useStyle = makeStyles((options) => ({
+const useStyle = makeStyles({
     viewport: {
         position: "relative",
-
+        height: "100%",
+        flexGrow: 1
     },
     view: {
         display: "flex",
@@ -28,22 +42,23 @@ const useStyle = makeStyles((options) => ({
         width: "100%",
         position: "relative",
         flexDirection: "row",
-        overflow: "hidden"
+        ...shorthands.overflow("hidden")
     },
     page: {
         flexDirection: 'column',
-        flex: '1 1 0%',
+        ...shorthands.flex('1', '1', '0%'),
         height: '100%',
-        display:'flex'
+        flexGrow: 1,
+        display: 'flex'
     },
     renderer: {
-        overflow: 'hidden',
-        flex: '1 1 0%',
+        ...shorthands.overflow("hidden"),
+        ...shorthands.flex('1', '1', '0%'),
         height: '100%',
-        width:'100%',
+        width: '100%',
     },
     rendereEnabled: {
-        background: options.palette.blackTranslucent40
+        backgroundColor: tokens.colorNeutralBackground6
     },
     content: {
         paddingBottom: "2rem",
@@ -51,26 +66,80 @@ const useStyle = makeStyles((options) => ({
         alignItems: 'center',
         flexDirection: 'column',
         position: "relative",
-        display:'flex'
-        
-	}
-}));
- 
+        display: 'flex'
+
+    }
+});
 
 
-export const Viewport: React.FC<PropsWithChildren<ViewPortProps>> = ({ children, showToolbox = true, showSidebar = true, showHeader = true }) => {
-    const {
-        enabled,
-        connectors,
-        actions: { setOptions },
-    } = useEditor((state) => ({
-        enabled: state.options.enabled as boolean,
+
+export const SettingsDrawer = () => {
+
+    const { enabled, connectors, active, related, displayName, actions: { setOptions, selectNode, deserialize }, query: { getNodes, getSerializedNodes } } = useEditor((state) => ({
+        displayName: Array.from(state.events.selected.values()).map(n => state.nodes[n].data.displayName)[0],
+        enabled: state.options.enabled,
+        active: state.events.selected && state.events.selected.size > 0,
+        related:
+            Array.from(state.events.selected.values()).map(n => state.nodes[n].related)[0],
     }));
 
-    const style = useStyle();
-
-
     return (
+        <Drawer size="medium" style={{
+            position: "absolute",
+            bottom: 0,
+            top: 0,
+            zIndex:40
+        }}
+            type="inline"
+            position="end"
+            separator
+            open={(enabled && !!related && !!related.toolbar)}
+
+        >
+            <DrawerHeader>
+                <DrawerHeaderTitle
+                    action={
+                        <Button
+                            appearance="subtle"
+                            aria-label="Close"
+                            icon={<Dismiss24Regular />}
+                            onClick={() => selectNode()}
+                        />
+                    }
+                >
+                    Default Drawer
+                </DrawerHeaderTitle>
+            </DrawerHeader>
+
+            <DrawerBody>
+                <Accordion>
+                    {related && related.toolbar && React.createElement(related.toolbar)}
+                    {related && related.visible && React.createElement(related.visible as React.FunctionComponent)}
+                </Accordion>
+            </DrawerBody>
+        </Drawer>)
+}
+
+export const Viewport: React.FC<PropsWithChildren<ViewPortProps>> = ({ children, showToolbox = true, showSidebar = true, showHeader = true }) => {
+    //const {
+    //    enabled,
+    //    connectors,
+    //    actions: { setOptions },
+    //} = useEditor((state) => ({
+    //    enabled: state.options.enabled as boolean,
+    //}));
+
+    const style = useStyle();
+    const { enabled, connectors, active, related, displayName, actions: { setOptions, selectNode, deserialize }, query: { getNodes, getSerializedNodes } } = useEditor((state) => ({
+        displayName: Array.from(state.events.selected.values()).map(n => state.nodes[n].data.displayName)[0],
+        enabled: state.options.enabled,
+        active: state.events.selected && state.events.selected.size > 0,
+        related:
+            Array.from(state.events.selected.values()).map(n => state.nodes[n].related)[0],
+    }));
+
+
+    return (<>
         <div className={style.viewport}>
             <div className={style.view}>
                 {showToolbox && <Toolbox />}
@@ -96,6 +165,11 @@ export const Viewport: React.FC<PropsWithChildren<ViewPortProps>> = ({ children,
                 </div>
                 {showSidebar && <Sidebar />}
             </div>
+
+
         </div>
+
+
+    </>
     );
 };

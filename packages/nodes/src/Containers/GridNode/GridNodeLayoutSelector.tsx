@@ -31,7 +31,12 @@ export const GridNodeLayoutSelector: React.FC<GridNodeLayoutSelectorProps> = () 
     // }));
 
     //    const layers = useLayer(p => ({ grid: propValue ?? {}}));
-    const parentNode = getNode(node.data.parent);
+
+    if (!node.data.parent)
+        return null;
+
+
+    const parentNode =  getNode(node.data.parent);
     const idx = parentNode.childNodes().indexOf(id);
     return <GridSnippetContainer>
         {GridTemplates.map((grid, index) => (

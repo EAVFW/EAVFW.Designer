@@ -1,5 +1,13 @@
 import { useNode } from '@craftjs/core';
-import { makeStyles } from '@fluentui/react';
+
+import {
+    Accordion,
+    AccordionHeader,
+    AccordionItem,
+    AccordionPanel,
+    
+} from "@fluentui/react-components";
+
 //import {
 //    Accordion,
 //    AccordionSummary,
@@ -9,39 +17,38 @@ import { makeStyles } from '@fluentui/react';
 //} from '@material-ui/core';
 //import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-const usePanelStyles = makeStyles((_) => ({
-    root: {
-        background: 'transparent',
-        boxShadow: 'none',
-        '&:before': {
-            backgroundColor: 'rgba(0, 0, 0, 0.05)',
-        },
-        '&.Mui-expanded': {
-            margin: '0 0',
-            minHeight: '40px',
-            '&:before': {
-                opacity: '1',
-            },
-            '& + .MuiExpansionPanel-root:before ': {
-                display: 'block',
-            },
-        },
-    },
-}));
+//const usePanelStyles = makeStyles((_) => ({
+//    root: {
+//        background: 'transparent',
+//        boxShadow: 'none',
+//        '&:before': {
+//            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+//        },
+//        '&.Mui-expanded': {
+//            margin: '0 0',
+//            minHeight: '40px',
+//            '&:before': {
+//                opacity: '1',
+//            },
+//            '& + .MuiExpansionPanel-root:before ': {
+//                display: 'block',
+//            },
+//        },
+//    },
+//}));
 
-const useSummaryStyles = makeStyles((_) => ({
-    root: {
-        'min-height': '36px',
-        padding: 0,
-    },
-    content: {
-        margin: '0px',
-    },
-}));
+//const useSummaryStyles = makeStyles((_) => ({
+//    root: {
+//        'min-height': '36px',
+//        padding: 0,
+//    },
+//    content: {
+//        margin: '0px',
+//    },
+//}));
 
 export const ToolbarSection = ({ title, props, summary, children }: any) => {
-    const panelClasses = usePanelStyles({});
-    const summaryClasses = useSummaryStyles({});
+    
     const { nodeProps } = useNode((node) => ({
         nodeProps:
             props &&
@@ -50,7 +57,15 @@ export const ToolbarSection = ({ title, props, summary, children }: any) => {
                 return res;
             }, {}),
     }));
-    return (<div>according impl missing</div>
+    return ( 
+
+        <AccordionItem value={title}>
+            <AccordionHeader>
+                {title}
+                </AccordionHeader>
+                <AccordionPanel>{children}</AccordionPanel>
+            </AccordionItem>
+        
         //<Accordion classes={panelClasses}>
         //    <AccordionSummary classes={summaryClasses}>
         //        <div className="px-6 w-full">

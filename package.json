@@ -3,7 +3,7 @@
   "author": "Poul Kjeldager <poul@kjeldager.com>",
   "devDependencies": {
     "@types/node": "18.7.20",
-    "@types/react": "17.0.50",
+    "@types/react": "17.0.75",
     "concurrently": "7.4.0",
     "npm-run-all": "4.1.5",
     "multi-semantic-release": "3.0.1",

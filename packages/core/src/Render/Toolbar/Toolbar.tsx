@@ -6,6 +6,13 @@ export * from './ToolbarSection';
 export * from './ToolbarTextInput';
 export * from './ToolbarDropdown';
 
+import {
+    Accordion,
+    AccordionHeader,
+    AccordionItem,
+    AccordionPanel,
+
+} from "@fluentui/react-components";
 
 export const Toolbar = () => {
     const { active, related } = useEditor((state) => ({
@@ -17,7 +24,7 @@ export const Toolbar = () => {
     console.log("related", related);
     return (
         <div className="py-1 h-full">
-            {active && related.toolbar && React.createElement(related.toolbar)}
+            {active && related.toolbar && <Accordion>{React.createElement(related.toolbar)}</Accordion>}
             {!active && (
                 <div
                     className="px-5 py-2 flex flex-col items-center h-full justify-center text-center"

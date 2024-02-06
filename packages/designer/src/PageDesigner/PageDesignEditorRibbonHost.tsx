@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 
 import { useId, useBoolean } from '@fluentui/react-hooks';
 import React from "react";
-import { useEditor } from "@craftjs/core";
-import { ContextualMenu, DefaultButton, Dialog, DialogFooter, DialogType, Panel, PrimaryButton, TextField } from "@fluentui/react";
+import { useEditor, SerializedNodes } from "@craftjs/core";
+import { ContextualMenu, DefaultButton, Dialog, DialogFooter, DialogType, Panel, PanelType, PrimaryButton, TextField } from "@fluentui/react";
 
 import { useEAVForm } from '@eavfw/forms';
 import { useModelDrivenApp, useRibbon } from '@eavfw/apps';
 import jszip from "jszip";
 import { saveAs } from 'file-saver';
 import { gzip, ungzip } from "pako";
-import initial from "./defaultPageContent";
+import defaultinitial from "./defaultPageContent";
+import { Accordion } from "@fluentui/react-components";
 
 const dialogStyles = { main: { maxWidth: 450 } };
 
@@ -33,7 +34,7 @@ const dialogContentProps = {
 
 
 
-export const PageDesignEditorRibbonHost: React.FC = (props) => {
+export const PageDesignEditorRibbonHost: React.FC<{ initial?: string | SerializedNodes }> = ({ initial = defaultinitial }) => {
 
     const [layersVisible, setLayerVisible] = useState(true);
     const [toolbarVisible, setToolbarVisible] = useState(true);
@@ -389,18 +390,20 @@ export const PageDesignEditorRibbonHost: React.FC = (props) => {
         </Dialog>
         <Panel
             headerText={displayName}
-            isOpen={(active && !!related.toolbar)}
-
+            isOpen={(false && active && !!related.toolbar)}
+            
             onDismiss={() => selectNode()}
             isBlocking={false}
             // You MUST provide this prop! Otherwise screen readers will just say "button" with no label.
             closeButtonAriaLabel="Close"
         >
+            <Accordion>
+                {active && related.toolbar && React.createElement(related.toolbar)}
+                {active && related.visible && React.createElement(related.visible as React.FunctionComponent)}
+            </Accordion>
 
-            {active && related.toolbar && React.createElement(related.toolbar as React.FunctionComponent)}
-            {active && related.visible && React.createElement(related.visible as React.FunctionComponent)}
 
-
-        </Panel></>;
+        </Panel>
+        </>;
 
 }

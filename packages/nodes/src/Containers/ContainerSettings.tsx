@@ -1,3 +1,4 @@
+import { ToolbarNameItem } from '@eavfw/designer-core/src/Render/Toolbar';
 import { ToolbarItem } from '@eavfw/designer-core/src/Render/Toolbar/ToolbarItem';
 import { ToolbarSection } from '@eavfw/designer-core/src/Render/Toolbar/ToolbarSection';
 import { ToolbarRadio } from '@eavfw/designer-core/src/Render/Toolbar/ToolbarRadio';
@@ -5,9 +6,20 @@ import { PrimaryButton } from '@fluentui/react';
 import React from 'react';
 
 
+
 export const ContainerSettings = () => {
     return (
         <React.Fragment>
+            <ToolbarSection
+                title="Name"
+                props={['name']}
+                summary={({ name }: any) => {
+                    return `${name}`;
+                }}
+            >
+                <ToolbarNameItem  label="DisplayName" />
+                
+            </ToolbarSection>
             <ToolbarSection
                 title="Dimensions"
                 props={['width', 'height']}

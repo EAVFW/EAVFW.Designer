@@ -3,20 +3,20 @@
   "description": "Model Driven Apps",
   "version": "0.0.0",
   "dependencies": {
-    "@craftjs/core": "0.2.0-beta.8",
-    "@craftjs/layers": "0.2.0-beta.8"
+    "@craftjs/core": "0.2.4",
+    "@craftjs/layers": "0.2.1"
   },
   "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "5.3.5",
-    "@fluentui/react": "8.96.1"
+    "@fluentui/react": "8.115.3",
+    "@fluentui/react-components": "9.46.3"
   },
   "devDependencies": {
     "@types/styled-components": "5.1.26",
     "@svgr/webpack": "6.3.1"
   },
-  "license": "MIT",
   "files": [
     "src"
   ],

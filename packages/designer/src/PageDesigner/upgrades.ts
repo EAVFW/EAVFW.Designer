@@ -16,7 +16,7 @@ export const upgrades: Record<string, (nodes: Record<string, SerializedNode>) =>
             console.log(node);
             if (typeof (node.type) === "object" && node.type.resolvedName === "TabHeaderNode") {
                 node.isCanvas = true;
-                node.props.header = { sortOrder: nodes[node.parent].nodes.indexOf(nodeid), ...node.props.header }
+                node.props.header = { sortOrder: node.parent ? nodes[node.parent].nodes.indexOf(nodeid) : -1, ...node.props.header }
             }
         }
         return "1.0.2";
