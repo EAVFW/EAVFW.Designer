@@ -29,7 +29,7 @@ function sameTypeExistInParent(n: UserComponent, id:string, nodes: Nodes) {
         if (node.data.type === typename || node.data.type === n)
             return true;
         
-        node = nodes[node.data.parent];
+        node = nodes[node.data.parent!];
     }
 
     return false;
