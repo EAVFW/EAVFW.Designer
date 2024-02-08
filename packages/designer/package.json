@@ -17,7 +17,7 @@
     "styled-components": "5.3.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@rjsf/utils": "^5.16.1",
+    "@rjsf/utils": "^5.17.0",
     "@eavfw/apps": "1.4.0-vnext.18",
     "pako": "2.0.4",
     "@types/pako": "2.0.0",
