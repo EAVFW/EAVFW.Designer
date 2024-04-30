@@ -5,6 +5,7 @@ import { Placeholder } from "./Placeholder";
 
 type PlaceholderNodeProps = {
     content: string;
+    children?: React.ReactNode
 }
 export const PlaceholderNode: UserComponent<PlaceholderNodeProps> = ({content, children}) => {
 
