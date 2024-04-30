@@ -3,6 +3,7 @@ import React from "react";
 import { GridNodeLayoutSelector } from "../Containers/GridNode/GridNodeLayoutSelector";
 import { Placeholder } from "./Placeholder";
 
+
 type PlaceholderNodeProps = {
     content: string;
     children?: React.ReactNode
