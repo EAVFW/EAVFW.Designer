@@ -9,13 +9,11 @@
   "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "styled-components": "5.3.5",
-    "@fluentui/react": "8.115.3",
-    "@fluentui/react-components": "9.46.3"
+    "@fluentui/react": "^8.120.3",
+    "@fluentui/react-components": "^9.54.10"
   },
   "devDependencies": {
-    "@types/styled-components": "5.1.26",
-    "@svgr/webpack": "6.5.1"
+    "@svgr/webpack": "8.1.0"
   },
   "files": [
     "src"

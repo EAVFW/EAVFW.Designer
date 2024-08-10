@@ -9,11 +9,11 @@ on:
         type: string
       react_type_version:
         required: false
-        default: '17.0.75'
+        default: '18.2.0'
         type: string
       dotnetversion:
         required: false
-        default: '6.0.308'
+        default: '8.0.308'
         type: string
       nodeversion:
         required: false

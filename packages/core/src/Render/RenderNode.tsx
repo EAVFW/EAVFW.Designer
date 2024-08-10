@@ -2,7 +2,6 @@ import { useNode, useEditor, Node, EditorState } from '@craftjs/core';
 import { ROOT_NODE } from '@craftjs/utils';
 import React, { useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
 
 
 
@@ -11,49 +10,16 @@ import Delete from '../Icons/delete.svg';
 import Move from '../Icons/move.svg';
 import Visible from '../Icons/not-visible.svg';
 
-import { IconButton, IIconProps, makeStyles } from '@fluentui/react';
+import { IconButton, IIconProps } from '@fluentui/react';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
+import { SvgCorner } from './SvgCorner';
+import { IndicatorDiv } from './IndicatorDiv';
+import { Btn } from './Btn';
 
 
-type SvgCornerProps = {
-    alignment: string
-}
-const alignments = ["top", "left", "bottom", "right"];
-const SvgCorner = styled.svg <SvgCornerProps>`
-    
-    position: absolute;
-    ${props => alignments.map(a => props.alignment.indexOf(a) !== -1 ? `${a}: 0px` : `${a}: initial}`).join(';')};
-    transform: ${props => `rotate(${props.alignment === 'top left' ? 270 : props.alignment === 'bottom left' ? 180 : props.alignment === 'bottom right' ? 90 : 0}deg)`};
-    width: 14px;
-    height: 14px;
-    display: block;
-    cursor: pointer;
-`
 
-const IndicatorDiv = styled.div`
-  height: 30px;
-  margin-top: -29px;
-  margin-right:-4;
-  font-size: 12px;
-  line-height: 12px;
 
-  svg {
-    fill: #fff;
-    width: 15px;
-    height: 15px;
-  }
-`
 
-const Btn = styled.a`
-  padding: 0 0px;
-  opacity: 0.9;
-  display: flex;
-  align-items: center;
-  > div {
-    position: relative;
-    top: -50%;
-    left: -50%;
-  }
-`;
 const emojiIcon: IIconProps = { iconName: 'Add' };
 interface IRenderNode {
     canAddTop?: boolean,
@@ -72,25 +38,20 @@ function collector(state: EditorState, id: string) {
     }
 }
 
-
-const styles = makeStyles(theme => ({
+const useStyles = makeStyles({
     wrapper: {
-        color: theme.palette.white,
-        paddingTop: ".5rem",
-        paddingBottom: ".5rem",
-        paddingLeft: ".5rem",
-        paddingRight: ".5rem",
-        background: theme.palette.black,
+        color: tokens.colorNeutralForeground1, // Equivalent to theme.palette.white
+        paddingTop: tokens.spacingVerticalS, // Equivalent to ".5rem"
+        paddingBottom: tokens.spacingVerticalS, // Equivalent to ".5rem"
+        paddingLeft: tokens.spacingHorizontalS, // Equivalent to ".5rem"
+        paddingRight: tokens.spacingHorizontalS, // Equivalent to ".5rem"
+        backgroundColor: tokens.colorNeutralBackground1, // Equivalent to theme.palette.black
         alignItems: 'center',
-        display: "flex",
-        position: "fixed",
-        boxSizing: "border-box",
-
-
-
-    }
-}));
-
+        display: 'flex',
+        position: 'fixed',
+        boxSizing: 'border-box',
+    },
+});
 
 export const RenderNode = ({ render }: any) => {
     const { id } = useNode();
@@ -130,7 +91,7 @@ export const RenderNode = ({ render }: any) => {
         props: node.data.props,
     }));
 
-    const style = styles();
+    const style = useStyles();
 
     const currentRef = useRef<HTMLDivElement>(null);
     const cornerRef = useRef<HTMLDivElement>(null);
