@@ -2,7 +2,7 @@ import { useEditor } from '@craftjs/core';
 import { makeStyles, tokens, shorthands } from '@fluentui/react-components';
 
 import React, { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+
 import { classNames } from '../../Utils/classNames';
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import {

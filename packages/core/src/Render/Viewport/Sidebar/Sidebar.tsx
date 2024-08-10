@@ -1,20 +1,27 @@
 import { useEditor } from '@craftjs/core';
 import { Layers } from '@craftjs/layers';
 import React, { useState } from 'react';
-import styled from 'styled-components';
-
+import { makeStyles, shorthands } from '@fluentui/react-components';
 import { SidebarItem } from './SidebarItem';
-
 import CustomizeIcon from '../../../Icons/customize.svg';
 import LayerIcon from '../../../Icons/layers.svg';
 import { Toolbar } from '../../Toolbar/Toolbar';
 
-export const SidebarDiv = styled.div<{ enabled: boolean }>`
-  width: 280px;
-  opacity: ${(props) => (props.enabled ? 1 : 0)};
-  background: #fff;
-  margin-right: ${(props) => (props.enabled ? 0 : -280)}px;
-`;
+const useStyles = makeStyles({
+    sidebarDiv: {
+        width: '280px',
+        backgroundColor: '#fff',
+        ... shorthands.transition( 'margin-right','0.3s','opacity','0.3s'),
+    },
+    hidden: {
+        opacity: 0,
+        marginRight: '-280px',
+    },
+    visible: {
+        opacity: 1,
+        marginRight: '0px',
+    },
+});
 
 export const Sidebar = () => {
     const [layersVisible, setLayerVisible] = useState(true);
@@ -23,8 +30,10 @@ export const Sidebar = () => {
         enabled: state.options.enabled,
     }));
 
+    const styles = useStyles();
+
     return (
-        <SidebarDiv enabled={enabled} className="sidebar transition bg-white w-2">
+        <div className={`${styles.sidebarDiv} ${enabled ? styles.visible : styles.hidden}`}>
             <div className="flex flex-col h-full">
                 <SidebarItem
                     icon={CustomizeIcon}
@@ -47,6 +56,6 @@ export const Sidebar = () => {
                     </div>
                 </SidebarItem>
             </div>
-        </SidebarDiv>
+        </div>
     );
 };

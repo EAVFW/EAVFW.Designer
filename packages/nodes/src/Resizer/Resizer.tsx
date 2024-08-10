@@ -1,10 +1,8 @@
+import { makeStyles,shorthands } from '@griffel/react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNode, useEditor } from '@craftjs/core';
-
 import { debounce } from 'debounce';
 import { Resizable } from 're-resizable';
-import React, { useRef, useEffect, useState, useCallback } from 'react';
-import styled from 'styled-components';
-
 import {
     isPercentage,
     pxToPercent,
@@ -13,74 +11,95 @@ import {
     classNames
 } from '@eavfw/designer-core';
 
-const Indicators = styled.div<{ bound?: 'row' | 'column' }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  span {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 100%;
-    display: block;
-    box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.25);
-    z-index: 99999;
-    pointer-events: none;
-    border: 2px solid #36a9e0;
-    &:nth-child(1) {
-      ${(props) =>
-        props.bound
-            ? props.bound === 'row'
-                ? `
-                left: 50%;
-                top: -5px;
-                transform:translateX(-50%);
-              `
-                : `
-              top: 50%;
-              left: -5px;
-              transform:translateY(-50%);
-            `
-            : `
-              left: -5px;
-              top:-5px;
-            `}
-    }
-    &:nth-child(2) {
-      right: -5px;
-      top: -5px;
-      display: ${(props) => (props.bound ? 'none' : 'block')};
-    }
-    &:nth-child(3) {
-      ${(props) =>
-        props.bound
-            ? props.bound === 'row'
-                ? `
-                left: 50%;
-                bottom: -5px;
-                transform:translateX(-50%);
-              `
-                : `
-                bottom: 50%;
-                left: -5px;
-                transform:translateY(-50%);
-              `
-            : `
-              left: -5px;
-              bottom:-5px;
-            `}
-    }
-    &:nth-child(4) {
-      bottom: -5px;
-      right: -5px;
-      display: ${(props) => (props.bound ? 'none' : 'block')};
-    }
-  }
-`;
+const useStyles = makeStyles({
+    indicators: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        '& span': {
+            position: 'absolute',
+            width: '10px',
+            height: '10px',
+            backgroundColor: '#fff',
+            ...shorthands.borderRadius( '100%'),
+            display: 'block',
+            boxShadow: '0px 0px 12px -1px rgba(0, 0, 0, 0.25)',
+            zIndex: 99999,
+            pointerEvents: 'none',
+            ...shorthands.border('2px', 'solid','#36a9e0'),
+        },
+        '& span:nth-child(1)': {
+            left: '-5px',
+            top: '-5px',
+        },
+        '& span:nth-child(2)': {
+            right: '-5px',
+            top: '-5px',
+            display: 'block',
+        },
+        '& span:nth-child(3)': {
+            left: '-5px',
+            bottom: '-5px',
+        },
+        '& span:nth-child(4)': {
+            bottom: '-5px',
+            right: '-5px',
+            display: 'block',
+        },
+    },
+    rowBound: {
+        '& span:nth-child(1)': {
+            left: '50%',
+            top: '-5px',
+            transform: 'translateX(-50%)',
+        },
+        '& span:nth-child(2)': {
+            display: 'none',
+        },
+        '& span:nth-child(3)': {
+            left: '50%',
+            bottom: '-5px',
+            transform: 'translateX(-50%)',
+        },
+        '& span:nth-child(4)': {
+            display: 'none',
+        },
+    },
+    columnBound: {
+        '& span:nth-child(1)': {
+            top: '50%',
+            left: '-5px',
+            transform: 'translateY(-50%)',
+        },
+        '& span:nth-child(2)': {
+            display: 'none',
+        },
+        '& span:nth-child(3)': {
+            bottom: '50%',
+            left: '-5px',
+            transform: 'translateY(-50%)',
+        },
+        '& span:nth-child(4)': {
+            display: 'none',
+        },
+    },
+});
+
+const Indicators = ({ bound }: { bound?: 'row' | 'column' }) => {
+    const styles = useStyles();
+    const className = `${styles.indicators} ${bound === 'row' ? styles.rowBound : ''} ${bound === 'column' ? styles.columnBound : ''}`;
+    return (
+        <div className={className}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    );
+};
 
 export const Resizer = ({ propKey, children, ...props }: any) => {
     const {
@@ -117,10 +136,6 @@ export const Resizer = ({ propKey, children, ...props }: any) => {
     const nodeDimensions = useRef<any>(null);
     nodeDimensions.current = { width: nodeWidth, height: nodeHeight };
 
-    /**
-     * Using an internal value to ensure the width/height set in the node is converted to px
-     * because for some reason the <re-resizable /> library does not work well with percentages.
-     */
     const [internalDimensions, setInternalDimensions] = useState({
         width: nodeWidth,
         height: nodeHeight,
@@ -258,12 +273,7 @@ export const Resizer = ({ propKey, children, ...props }: any) => {
         >
             {children}
             {active && (
-                <Indicators bound={fillSpace === 'yes' ? parentDirection : false}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </Indicators>
+                <Indicators bound={fillSpace === 'yes' ? parentDirection : undefined} />
             )}
         </Resizable>
     );

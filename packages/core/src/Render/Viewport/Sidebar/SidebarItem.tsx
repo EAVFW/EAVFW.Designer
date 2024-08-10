@@ -1,41 +1,61 @@
 import React, { PropsWithChildren } from 'react';
-import styled from 'styled-components';
-
+import { makeStyles, shorthands } from '@griffel/react';
 import Arrow from '../../../Icons/arrow.svg';
 
-const SidebarItemDiv = styled.div<{ visible?: boolean; height?: string }>`
-  height: ${(props) =>
-        props.visible && props.height && props.height !== 'full'
-            ? `${props.height}`
-            : 'auto'};
-  flex: ${(props) =>
-        props.visible && props.height && props.height === 'full' ? `1` : 'unset'};
-  color: #545454;
-`;
-
-const Chevron = styled.a<{ visible?: boolean }>`
-  transform: rotate(${(props) => (props.visible ? 180 : 0)}deg);
-  svg {
-    width: 8px;
-    height: 8px;
-  }
-`;
+const useStyles = makeStyles({
+    sidebarItemDiv: {
+        color: '#545454',
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'auto',
+        '&.fullHeight': {
+            flex: 1,
+        },
+    },
+    chevron: {
+        display: 'inline-block',
+        ...shorthands.transition('transform','0.2s'),
+        '& svg': {
+            width: '8px',
+            height: '8px',
+        },
+        '&.rotated': {
+            transform: 'rotate(180deg)',
+        },
+    },
+    headerDiv: {
+        color: '#615c5c',
+        height: '45px',
+        display: 'flex',
+        alignItems: 'center',
+        ...shorthands.padding('0','8px'),
+        backgroundColor: 'white',
+        borderBottom: '1px solid #e0e0e0',
+        cursor: 'pointer',
+        '&:last-child': {
+            borderBottom: 'none',
+        },
+        '& svg': {
+            fill: '#707070',
+        },
+        '&.shadow': {
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+        },
+    },
+    content: {
+        width: '100%',
+        flex: 1,
+        ...shorthands.overflow('auto'),
+    },
+});
 
 export type SidebarItemProps = {
     title: string;
     height?: string;
-    icon: string;
+    icon: React.ElementType;
     visible?: boolean;
     onChange?: (bool: boolean) => void;
 };
-
-const HeaderDiv = styled.div`
-  color: #615c5c;
-  height: 45px;
-  svg {
-    fill: #707070;
-  }
-`;
 
 export const SidebarItem: React.FC<PropsWithChildren<SidebarItemProps>> = ({
     visible,
@@ -45,26 +65,28 @@ export const SidebarItem: React.FC<PropsWithChildren<SidebarItemProps>> = ({
     height,
     onChange,
 }) => {
+    const styles = useStyles();
+    const sidebarItemClass = `${styles.sidebarItemDiv} ${visible && height === 'full' ? 'fullHeight' : ''}`;
+    const chevronClass = `${styles.chevron} ${visible ? 'rotated' : ''}`;
+    const headerClass = `${styles.headerDiv} ${visible ? 'shadow' : ''}`;
+
     return (
-        <SidebarItemDiv visible={visible} height={height} className="flex flex-col">
-            <HeaderDiv
+        <div className={sidebarItemClass} style={{ height: visible && height && height !== 'full' ? height : 'auto' }}>
+            <div
+                className={headerClass}
                 onClick={() => {
                     if (onChange) onChange(!visible);
                 }}
-                className={`cursor-pointer bg-white border-b last:border-b-0 flex items-center px-2 ${visible ? 'shadow-sm' : ''
-                    }`}
             >
                 <div className="flex-1 flex items-center">
                     {React.createElement(icon, { className: 'w-4 h-4 mr-2' })}
                     <h2 className="text-xs uppercase">{title}</h2>
                 </div>
-                <Chevron visible={visible}>
+                <a className={chevronClass}>
                     <Arrow />
-                </Chevron>
-            </HeaderDiv>
-            {visible ? (
-                <div className="w-full flex-1 overflow-auto">{children}</div>
-            ) : null}
-        </SidebarItemDiv>
+                </a>
+            </div>
+            {visible ? <div className={styles.content}>{children}</div> : null}
+        </div>
     );
 };

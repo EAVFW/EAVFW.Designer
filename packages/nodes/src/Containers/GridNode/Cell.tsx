@@ -1,9 +1,8 @@
-import styled from "styled-components"
-
+import React from 'react';
+import { makeStyles } from '@fluentui/react-components';
 
 type CellProps = {
     cell: {
-
         position: {
             col: number,
             row: number,
@@ -11,25 +10,43 @@ type CellProps = {
         span: {
             cols: number,
             rows: number,
-
         },
         alignment: {
             vertical: string,
             horizontal: string
         }
     }
-
 }
 
-export const CellStyled = styled.div<CellProps>`
-    grid-row-start: ${props => props.cell.position.row};
-    grid-row-end: ${props => props.cell.position.row + props.cell.span.rows};
-    grid-column-start: ${props => props.cell.position.col};
-    grid-column-end: ${props => props.cell.position.col + props.cell.span.cols};
-    display: flex;
-    flex-wrap: wrap;
-    min-width: 0;
-    position:relative;
-`
-export const Cell = CellStyled;
-//export const Cell: React.FC<CellProps & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = ({ children, ...props }) => <CellStyled {...props}>{children}</CellStyled>
+const useStyles = makeStyles({
+    cell: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        minWidth: '0',
+        position: 'relative',
+    },
+});
+
+export const Cell: React.FC<CellProps & React.HTMLAttributes<HTMLDivElement>> = ({ cell, children, ...props }) => {
+    const styles = useStyles();
+
+    const gridRowStart = cell.position.row;
+    const gridRowEnd = cell.position.row + cell.span.rows;
+    const gridColumnStart = cell.position.col;
+    const gridColumnEnd = cell.position.col + cell.span.cols;
+
+    return (
+        <div
+            className={styles.cell}
+            style={{
+                gridRowStart: gridRowStart,
+                gridRowEnd: gridRowEnd,
+                gridColumnStart: gridColumnStart,
+                gridColumnEnd: gridColumnEnd,
+            }}
+            {...props}
+        >
+            {children}
+        </div>
+    );
+};
