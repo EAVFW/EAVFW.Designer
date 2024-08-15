@@ -22,7 +22,7 @@ const useStyles = makeStyles({
             bottom: '5px',
             position: 'absolute',
             content: '""',
-            backgroundColor: 'repeating-linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0.05) 10px, rgba(0, 0, 0, 0.05) 20px)',
+            backgroundImage: 'repeating-linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0.05) 10px, rgba(0, 0, 0, 0.05) 20px)'
         },
     },
 });

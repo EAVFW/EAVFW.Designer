@@ -11,7 +11,7 @@
 //  }
 //`;
 
-import { makeStyles, shorthands } from '@fluentui/react-components';
+import { makeStyles, mergeClasses, shorthands } from '@fluentui/react-components';
 import React, { forwardRef } from 'react';
 
 const useStyles = makeStyles({
@@ -28,10 +28,10 @@ const useStyles = makeStyles({
     },
 });
 
-export const Btn = forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement>>(({ children, ...props }, ref) => {
+export const Btn = forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement>>(({ children, className, ...props }, ref) => {
     const classes = useStyles();
     return (
-        <a ref={ref} className={classes.btn} {...props}>
+        <a ref={ref} className={mergeClasses(classes.btn, className)} {...props} >
             {children}
         </a>
     );

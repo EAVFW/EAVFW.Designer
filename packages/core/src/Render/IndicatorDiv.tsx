@@ -14,7 +14,7 @@
 //  }
 //`
 
-import { makeStyles, shorthands } from '@fluentui/react-components';
+import { makeStyles, mergeClasses, shorthands } from '@fluentui/react-components';
 import React, { forwardRef } from 'react';
 
 const useStyles = makeStyles({
@@ -32,10 +32,10 @@ const useStyles = makeStyles({
     },
 });
 
-export const IndicatorDiv = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ children, ...props }, ref) => {
+export const IndicatorDiv = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ children, className, ...props }, ref) => {
     const classes = useStyles();
     return (
-        <div ref={ref} className={classes.indicatorDiv} {...props}>
+        <div ref={ref} className={mergeClasses(classes.indicatorDiv, className)} {...props} >
             {children}
         </div>
     );

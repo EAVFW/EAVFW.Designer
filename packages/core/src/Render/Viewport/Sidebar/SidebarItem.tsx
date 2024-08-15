@@ -9,7 +9,9 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         height: 'auto',
         '&.fullHeight': {
-            flex: 1,
+            flexGrow: 1,
+            flexShrink: 1,
+            flexBasis: "0%"
         },
     },
     chevron: {
@@ -30,10 +32,10 @@ const useStyles = makeStyles({
         alignItems: 'center',
         ...shorthands.padding('0','8px'),
         backgroundColor: 'white',
-        borderBottom: '1px solid #e0e0e0',
+        ...shorthands.borderBottom('1px','solid','#e0e0e0'),
         cursor: 'pointer',
         '&:last-child': {
-            borderBottom: 'none',
+            borderBottomStyle: 'none',
         },
         '& svg': {
             fill: '#707070',
@@ -44,7 +46,9 @@ const useStyles = makeStyles({
     },
     content: {
         width: '100%',
-        flex: 1,
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: "0%",
         ...shorthands.overflow('auto'),
     },
 });
